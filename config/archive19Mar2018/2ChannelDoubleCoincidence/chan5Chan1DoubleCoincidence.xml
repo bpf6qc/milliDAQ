@@ -1,0 +1,161 @@
+<!--
+    Caen- V1743 Configuration File
+    Defaults
+-->
+
+<config>
+
+  <general>
+    <!-- software-only settings; these are not applied to the V1743 board -->
+
+    <!-- TFileCompression enable="0 or 1" -->
+    <TFileCompression enabled="0" />
+
+    <!--
+	HighLevelTrigger enable="0 or 1"
+        maxAmplitude="-10" : a channel with its minimum sample (in mV) less than this will be considered "on"
+        numRequired="3" : number of layers in a row required to be high in order to record an event -->
+    <HighLevelTrigger enabled="0" maxAmplitude="-10" numRequired="3" />
+
+    <!--
+	CosmicPrescale enable="0 or 1"
+        maxAmplitude="-200" : a channel with its minimum sample (in mV) less than this will be considered as having a cosmic
+        numRequired="2" : number of channels in the vertical direction required to be high in order to record an event
+        prescale="5" : only 1 out of every 'prescale' cosmic events will be recorded to disk -->
+    <CosmicPrescale enabled="0" maxAmplitude="-200" numRequired="2" prescale="5" />
+
+  </general>
+
+  <common>
+    <!-- connectionType type: USB, opticalLink -->
+    <connectionType linkNum="0" conetNode="0" vmeBaseAddress="0" type="opticalLink" />
+
+    <!-- IRQ use="0 or 1"
+         level="1" : always 1 for optical link
+         status_id="0" : meaningless for optical link
+         nevents="6" : 6 for scope mode, 1 for charge mode seems to work
+         mode="RORA" : board supports RORA, but not ROAK
+         timeout="wait time in ms" -->
+    <IRQ use="1"
+	 level="1"
+	 status_id="0"
+	 nevents="2"
+	 mode="RORA"
+	 timeout="50"
+	 />
+
+    <!-- chargeMode use="0 or 1"
+         suppressBaseline="0 or 1" -->
+    <chargeMode use="0" suppressBaseline="1" />
+
+    <!-- samcorrection level: all, INL, pedestalOnly, correctionDisabled -->
+    <samCorrection level="all" />
+
+    <!-- samFrequency rate: 3.2, 1.6, 0.8, 0.4 GS/s -->
+    <samFrequency rate="1.6" />
+
+    <!-- recordLength in samples: N*16, N>=4-->
+    <recordLength length="1024" />
+
+    <!-- triggerType: software, normal, auto, external, externalAndNormal -->
+    <triggerType type="normal" />
+
+    <!-- ioLevel: NIM, TTL -->
+    <ioLevel type="TTL" />
+
+    <!-- maximum number of events for block transfer -->
+    <maxNumEventsBLT number="100" />
+
+    <!-- groupTriggerLogic logic: or, and, majority -->
+    <groupTriggerLogic majorityLevel="2" logic="majority" />
+
+    <!-- triggerCountVeto enabled="0 or 1"
+         vetoWindow="window in ns" -->
+    <triggerCountVeto enabled="0" vetoWindow="125" />
+
+  </common>
+
+  <groups>
+
+    <!--
+	group number="-1" will set every group to specified settings.
+	any specific group (0-7) given after "all" will change those
+	settings.
+	================
+	group number="group number"
+	coincidenceWindow="gate primative in ns"
+	logic=(or/and)
+    -->
+
+    <group number="-1" coincidenceWindow="100" logic="or" triggerDelay="24" />
+
+  </groups>
+
+  <channels>
+
+    <!--
+	channel number="-1" will set every channel to specified settings.
+	any specific channel (0-15) given after "all" will change
+	those settings.
+	===============
+	channel number="channel number"
+	channelEnable="0 or 1"
+	testPulseEnable="0 or 1"
+	testPulsePattern="hex pulse test pattern" : don't use leading 0x
+	testPulseSource="continuous or software"
+	triggerEnable="0 or 1"
+	triggerThreshold="trigger threshold in volts"
+	triggerPolarity="risingEdge or FallingEdge"
+	dcOffset="DC offset in volts" : a positive value will move the pedestal DOWN
+	chargeStartCell="sample number to start charge integration"
+	chargeLength="length in samples to integrate charge"
+	enableChargeThreshold="0 or 1"
+	chargeThreshold="charge threshold in volts to record event"
+    -->
+
+    <channel number="-1"
+	     channelEnable="1"
+	     testPulseEnable="0"
+	     testPulsePattern="01"
+	     testPulseSource="continuous"
+	     triggerEnable="0"
+	     triggerThreshold="-10."
+	     triggerPolarity="fallingEdge"
+	     dcOffset="0.000"
+	     chargeStartCell="212"
+	     chargeLength="430"
+	     enableChargeThreshold="0"
+	     chargeThreshold="0.0"
+	     />
+    <channel number="5"
+             channelEnable="1"
+             testPulseEnable="0"
+             testPulsePattern="01"
+             testPulseSource="continuous"
+             triggerEnable="1"
+             triggerThreshold="-0.003"
+             triggerPolarity="fallingEdge"
+             dcOffset="0.000"
+             chargeStartCell="212"
+             chargeLength="430"
+             enableChargeThreshold="0"
+             chargeThreshold="0.0"
+             />
+    <channel number="1"
+	     channelEnable="1"
+	     testPulseEnable="0"
+	     testPulsePattern="01"
+	     testPulseSource="continuous"
+	     triggerEnable="1"
+	     triggerThreshold="-0.003"
+	     triggerPolarity="fallingEdge"
+	     dcOffset="0.000"
+	     chargeStartCell="212"
+	     chargeLength="430"
+	     enableChargeThreshold="0"
+	     chargeThreshold="0.0"
+	     />
+
+  </channels>
+
+</config>

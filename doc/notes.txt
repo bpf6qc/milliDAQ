@@ -1,0 +1,32 @@
+systemctl status MilliDAQ.service
+
+sudo systemctl start/stop MilliDAQ.service
+
+tail -f /var/log/MilliDAQ.log
+
+# Control whether service loads on boot
+systemctl enable
+systemctl disable
+
+# Manual start and stop
+systemctl start
+systemctl stop
+
+# Restarting/reloading
+systemctl daemon-reload # Run if .service file has changed
+systemctl restart
+
+# See if running, uptime, view latest logs
+systemctl status
+
+# See all systemd logs
+journalctl
+
+# Tail logs
+journalctl -f
+
+# Show logs for specific service
+journalctl -u my_daemon.service
+
+
+sudo logrotate -vf /etc/logrotate.d/MilliDAQ

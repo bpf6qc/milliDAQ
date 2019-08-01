@@ -1,0 +1,16 @@
+[Unit]
+Description=System service to run the MilliDAQ software
+
+[Service]
+Environment=LD_LIBRARY_PATH=/usr/lib
+Environment=PYTHONPATH=/usr/local/root/lib:/home/milliqan/MilliDAQ/config:/home/milliqan/MilliDAQ/python
+ExecStart=/bin/bash -c '\
+  source /usr/local/root/bin/thisroot.sh ; \
+  exec /usr/local/bin/MilliDAQ'
+ExecStop=/bin/bash -c '/bin/echo quit >> /tmp/MilliDAQ_FIFO ; /usr/bin/sleep 5'
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+
